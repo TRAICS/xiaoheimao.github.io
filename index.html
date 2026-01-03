@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人博客 | 扁平风格设计</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --accent-color: #ff7e5f;
+            --light-color: #f8f9fa;
+            --dark-color: #333;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        a:hover {
+            color: var(--accent-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 22px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #ff6b4a;
+        }
+        
+        /* 顶部导航 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 8px 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        
+        /* 主要内容区域 */
+        main {
+            padding: 40px 0;
+        }
+        
+        /* 页头 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .page-header p {
+            color: var(--gray-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* 博客文章网格 */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .blog-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .blog-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .blog-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+        
+        .blog-content {
+            padding: 25px;
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            line-height: 1.4;
+        }
+        
+        .blog-content p {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+        
+        .read-more {
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* 文章详情页 */
+        .article-detail {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+        }
+        
+        .article-header {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .article-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--gray-color);
+            font-size: 0.95rem;
+        }
+        
+        .article-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .article-content h2 {
+            color: var(--primary-color);
+            margin: 30px 0 15px;
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: var(--gray-color);
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .sidebar h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            color: var(--primary-color);
+        }
+        
+        .about-widget {
+            text-align: center;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 5px solid #f0f4f8;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .categories-list {
+            list-style: none;
+        }
+        
+        .categories-list li {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .categories-list a {
+            display: flex;
+            justify-content: space-between;
+            color: var(--dark-color);
+        }
+        
+        .categories-list a:hover {
+            color: var(--accent-color);
+        }
+        
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background-color: #f0f4f8;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 联系表单 */
+        .contact-form {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-color);
+            color: #bbb;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #444;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .blog-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 99;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .article-detail, .contact-form {
+                padding: 25px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header {
+                padding: 20px;
+            }
+            
+            .article-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">个人<span>博客</span></a>
+                
+                <ul class="nav-links">
+                    <li><a href="#" class="active" data-page="home">首页</a></li>
+                    <li><a href="#" data-page="blog">博客</a></li>
+                    <li><a href="#" data-page="article">文章详情</a></li>
+                    <li><a href="#" data-page="about">关于</a></li>
+                    <li><a href="#" data-page="contact">联系</a></li>
+                </ul>
+                
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <div class="container">
+            <!-- 首页 -->
+            <section id="home-page" class="page">
+                <div class="page-header">
+                    <h1>欢迎来到我的个人博客</h1>
+                    <p>在这里分享技术、生活和思考。扁平化设计，简洁优雅，专注于内容本身。</p>
+                </div>
+                
+                <div class="blog-grid">
+                    <!-- 博客文章卡片1 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="编程学习">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar"></i> 2023-10-15</span>
+                                <span><i class="far fa-folder"></i> 技术</span>
+                            </div>
+                            <h3>现代前端开发趋势与技术栈选择</h3>
+                            <p>随着前端技术的快速发展，我们面临着越来越多的框架和工具选择。本文将探讨2023年最值得关注的前端开发趋势，并为您提供技术栈选择的建议。</p>
+                            <a href="#" class="read-more" data-page="article" data-article="1">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                    
+                    <!-- 博客文章卡片2 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="旅行摄影">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar"></i> 2023-09-28</span>
+                                <span><i class="far fa-folder"></i> 生活</span>
+                            </div>
+                            <h3>冰岛极光之旅：追寻自然之光</h3>
+                            <p>冰岛，这个北大西洋上的火山岛国，拥有着令人惊叹的自然景观。在这次旅行中，我不仅看到了壮丽的极光，还体验了冰川徒步和火山探险。</p>
+                            <a href="#" class="read-more" data-page="article" data-article="2">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                    
+                    <!-- 博客文章卡片3 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="健康饮食">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar"></i> 2023-09-10</span>
+                                <span><i class="far fa-folder"></i> 健康</span>
+                            </div>
+                            <h3>地中海饮食：科学与实践指南</h3>
+                            <p>地中海饮食被公认为最健康的饮食模式之一。本文将介绍其科学依据、核心原则以及如何将其融入日常生活，改善健康状况。</p>
+                            <a href="#" class="read-more" data-page="article" data-article="3">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            
+            <!-- 博客列表页 -->
+            <section id="blog-page" class="page" style="display: none;">
+                <div class="page-header">
+                    <h1>所有文章</h1>
+                    <p>这里是我所有的博客文章，涵盖技术、生活、旅行和健康等多个主题。</p>
+                </div>
+                
+                <div class="blog-grid">
+                    <!-- 动态生成的博客文章列表会在这里显示 -->
+                </div>
+            </section>
+            
+            <!-- 文章详情页 -->
+            <section id="article-page" class="page" style="display: none;">
+                <div class="article-detail">
+                    <div class="article-header">
+                        <h1 id="article-title">现代前端开发趋势与技术栈选择</h1>
+                        <div class="article-meta">
+                            <span><i class="far fa-user"></i> 作者：李明</span>
+                            <span><i class="far fa-calendar"></i> 发布日期：2023-10-15</span>
+                            <span><i class="far fa-folder"></i> 分类：技术</span>
+                            <span><i class="far fa-eye"></i> 阅读：1284</span>
+                        </div>
+                    </div>
+                    
+                    <div class="article-content" id="article-content">
+                        <!-- 文章内容会通过JavaScript动态加载 -->
+                    </div>
+                </div>
+                
+                <!-- 侧边栏 -->
+                <aside class="sidebar">
+                    <div class="about-widget">
+                        <div class="profile-img">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="作者头像">
+                        </div>
+                        <h3>关于作者</h3>
+                        <p>前端开发工程师，热爱技术分享和写作。专注于现代Web开发技术，喜欢探索新技术，乐于分享学习经验。</p>
+                        <a href="#" class="btn btn-accent" data-page="about">了解更多</a>
+                    </div>
+                </aside>
+            </section>
+            
+            <!-- 关于页面 -->
+            <section id="about-page" class="page" style="display: none;">
+                <div class="page-header">
+                    <h1>关于我</h1>
+                    <p>了解我的经历、技能和兴趣</p>
+                </div>
+                
+                <div class="article-detail">
+                    <div class="article-content">
+                        <h2>个人简介</h2>
+                        <p>你好！我是李明，一名有8年前端开发经验的软件工程师。目前在一家科技公司担任高级前端工程师，负责复杂Web应用的架构设计和开发工作。</p>
+                        
+                        <h2>专业技能</h2>
+                        <p>我精通现代前端开发技术栈，包括：</p>
+                        <ul>
+                            <li>HTML5, CSS3, JavaScript (ES6+)</li>
+                            <li>React, Vue.js, Angular等主流框架</li>
+                            <li>TypeScript, Node.js</li>
+                            <li>Webpack, Vite等构建工具</li>
+                            <li>响应式设计和移动端开发</li>
+                            <li>性能优化和Web可访问性</li>
+                        </ul>
+                        
+                        <h2>工作经历</h2>
+                        <p>在过去的职业生涯中，我曾参与多个大型项目，包括电商平台、企业级管理系统和移动应用开发。我热衷于解决复杂的技术问题，并乐于分享知识。</p>
+                        
+                        <blockquote>
+                            "技术之路永无止境，保持学习的心态是应对变化的最佳策略。"
+                        </blockquote>
+                        
+                        <h2>兴趣与爱好</h2>
+                        <p>除了编程，我还热爱旅行、摄影和阅读。我认为多元化的兴趣能够丰富人生体验，也为技术工作带来新的视角和灵感。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 联系页面 -->
+            <section id="contact-page" class="page" style="display: none;">
+                <div class="page-header">
+                    <h1>联系我</h1>
+                    <p>有任何问题或合作意向？请随时与我联系</p>
+                </div>
+                
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" class="form-control" placeholder="请输入您的姓名" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" class="form-control" placeholder="请输入您的邮箱地址" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">主题</label>
+                            <input type="text" id="subject" class="form-control" placeholder="请输入邮件主题" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">留言内容</label>
+                            <textarea id="message" class="form-control" placeholder="请输入您的留言内容" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-accent">发送消息</button>
+                    </form>
+                </div>
+                
+                <!-- 侧边栏 -->
+                <aside class="sidebar">
+                    <div>
+                        <h3>联系方式</h3>
+                        <p><i class="fas fa-envelope"></i> Email: contact@example.com</p>
+                        <p><i class="fas fa-phone"></i> 电话: +86 138 0000 0000</p>
+                        <p><i class="fas fa-map-marker-alt"></i> 地址: 北京市朝阳区</p>
+                        
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-weibo"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>个人博客</h3>
+                    <p>一个专注于分享技术、生活和思考的个人博客。扁平化设计，简洁优雅，专注于内容本身。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-page="home">首页</a></li>
+                        <li><a href="#" data-page="blog">所有文章</a></li>
+                        <li><a href="#" data-page="about">关于我</a></li>
+                        <li><a href="#" data-page="contact">联系</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>文章分类</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">技术</a></li>
+                        <li><a href="#">生活</a></li>
+                        <li><a href="#">旅行</a></li>
+                        <li><a href="#">健康</a></li>
+                        <li><a href="#">读书</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>订阅博客</h3>
+                    <p>订阅我的博客，获取最新文章推送。</p>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="请输入您的邮箱">
+                        <button class="btn btn-accent" style="margin-top: 10px; width: 100%;">订阅</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 个人博客. 保留所有权利. 设计采用扁平化风格</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 页面切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有页面元素
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-links');
+            const readMoreLinks = document.querySelectorAll('.read-more');
+            const contactForm = document.getElementById('contactForm');
+            
+            // 初始化显示首页
+            showPage('home-page');
+            
+            // 导航链接点击事件
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page') + '-page';
+                    
+                    // 更新导航栏活动状态
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 显示对应页面
+                    showPage(pageId);
+                    
+                    // 如果是文章详情页，根据data-article属性加载对应文章
+                    if (pageId === 'article-page') {
+                        const articleId = this.getAttribute('data-article');
+                        if (articleId) {
+                            loadArticle(articleId);
+                        }
+                    }
+                    
+                    // 移动端菜单收起
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+            
+            // 文章卡片"阅读全文"链接点击事件
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page') + '-page';
+                    const articleId = this.getAttribute('data-article');
+                    
+                    // 更新导航栏活动状态
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    document.querySelector(`.nav-links a[data-page="${this.getAttribute('data-page')}"]`).classList.add('active');
+                    
+                    // 显示文章详情页并加载文章
+                    showPage(pageId);
+                    loadArticle(articleId);
+                    
+                    // 移动端菜单收起
+                    if (navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+            
+            // 移动端菜单切换
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+            
+            // 联系表单提交事件
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // 在实际应用中，这里应该发送表单数据到服务器
+                    // 这里我们只模拟提交成功
+                    const name = document.getElementById('name').value;
+                    alert(`感谢 ${name} 的留言！我会尽快回复您。`);
+                    
+                    // 重置表单
+                    contactForm.reset();
+                });
+            }
+            
+            // 文章数据
+            const articles = {
+                1: {
+                    title: "现代前端开发趋势与技术栈选择",
+                    date: "2023-10-15",
+                    category: "技术",
+                    views: 1284,
+                    content: `
+                        <p>前端开发领域正在以前所未有的速度发展。从最初的HTML、CSS和JavaScript基础，到现在复杂的前端框架和工具链，前端工程师需要不断学习新技术以保持竞争力。</p>
+                        
+                        <h2>2023年前端趋势</h2>
+                        <p>今年最值得关注的前端趋势包括：</p>
+                        <ul>
+                            <li><strong>TypeScript的普及</strong>：越来越多的项目采用TypeScript作为主要开发语言，静态类型检查大大提升了代码质量和开发体验。</li>
+                            <li><strong>框架的持续演进</strong>：React 18带来了并发特性，Vue 3的Composition API日益成熟，SolidJS等新兴框架也开始受到关注。</li>
+                            <li><strong>构建工具的创新</strong>：Vite和Turbopack等新型构建工具提供了更快的开发体验和构建速度。</li>
+                            <li><strong>Web性能优化</strong>：Core Web Vitals成为衡量网站用户体验的重要指标，性能优化成为前端开发的核心关注点。</li>
+                        </ul>
+                        
+                        <h2>技术栈选择建议</h2>
+                        <p>对于新项目，我建议考虑以下技术栈组合：</p>
+                        <p><strong>中小型项目</strong>：Vue 3 + Vite + TypeScript + Pinia。这个组合学习曲线平缓，开发效率高，适合快速迭代的项目。</p>
+                        <p><strong>大型企业级应用</strong>：React 18 + TypeScript + Next.js + Zustand/TanStack Query。这个组合生态系统完善，社区支持好，适合需要高度可扩展性的项目。</p>
+                        
+                        <h2>学习建议</h2>
+                        <p>面对快速变化的技术环境，前端开发者应该：</p>
+                        <ol>
+                            <li>掌握JavaScript/TypeScript核心概念</li>
+                            <li>深入理解至少一个主流框架</li>
+                            <li>关注浏览器新特性和Web标准</li>
+                            <li>学习性能优化和Web可访问性最佳实践</li>
+                            <li>参与开源项目，实践新技术</li>
+                        </ol>
+                        
+                        <blockquote>
+                            前端开发不仅仅是实现UI界面，更是构建用户体验的艺术。选择合适的技术栈，可以让开发过程更加高效愉快。
+                        </blockquote>
+                    `
+                },
+                2: {
+                    title: "冰岛极光之旅：追寻自然之光",
+                    date: "2023-09-28",
+                    category: "生活",
+                    views: 892,
+                    content: `
+                        <p>今年九月，我实现了长久以来的梦想——前往冰岛追寻极光。这次旅行不仅让我看到了壮丽的自然景观，也让我对生活有了新的思考。</p>
+                        
+                        <h2>准备与行程</h2>
+                        <p>冰岛旅行需要充分的准备。由于天气多变，我们准备了防水防风的外套、保暖衣物和登山鞋。行程安排了10天，环绕冰岛一周，涵盖了主要景点。</p>
+                        
+                        <h2>极光体验</h2>
+                        <p>在冰岛的第五天，我们终于等到了极光爆发的夜晚。晚上10点左右，天空开始出现淡淡的绿色光带，随着时间的推移，极光越来越强烈，舞动的绿色光芒布满整个天空，仿佛大自然上演的一场灯光秀。</p>
+                        
+                        <p>拍摄极光需要一定的技巧：使用三脚架稳定相机，设置较长的曝光时间（通常10-30秒），ISO调至800-3200，光圈尽可能大（f/2.8或更大）。</p>
+                        
+                        <h2>冰岛的其他美景</h2>
+                        <p>除了极光，冰岛还有许多令人惊叹的景观：</p>
+                        <ul>
+                            <li><strong>黄金圈</strong>：包括辛格维利尔国家公园、盖歇尔间歇泉和黄金瀑布</li>
+                            <li><strong>杰古沙龙冰河湖</strong>：巨大的冰山漂浮在湖面上，景色壮观</li>
+                            <li><strong>黑沙滩</strong>：位于维克镇，独特的黑色沙滩和玄武岩柱</li>
+                            <li><strong>蓝湖温泉</strong>：地热温泉，湖水呈独特的蓝色</li>
+                        </ul>
+                        
+                        <h2>旅行感悟</h2>
+                        <p>冰岛之行让我深刻感受到自然的伟大和人类的渺小。在这个人口稀少的国家，自然景观保持着原始的状态，提醒我们要尊重自然、保护环境。</p>
+                        
+                        <blockquote>
+                            旅行不仅是看风景，更是开阔眼界、丰富内心的过程。冰岛的极光让我明白，世界上最美的景色往往需要耐心等待。
+                        </blockquote>
+                    `
+                },
+                3: {
+                    title: "地中海饮食：科学与实践指南",
+                    date: "2023-09-10",
+                    category: "健康",
+                    views: 756,
+                    content: `
+                        <p>地中海饮食被公认为世界上最健康的饮食模式之一。它源自地中海沿岸国家的传统饮食习惯，经过科学研究证实对心血管健康、体重管理和长寿都有积极影响。</p>
+                        
+                        <h2>地中海饮食的核心原则</h2>
+                        <p>地中海饮食不仅是一种饮食方式，更是一种生活方式。其核心原则包括：</p>
+                        <ul>
+                            <li>以植物性食物为主：大量蔬菜、水果、全谷物、豆类和坚果</li>
+                            <li>使用橄榄油作为主要脂肪来源</li>
+                            <li>适量摄入鱼类和海鲜（每周至少两次）</li>
+                            <li>适度摄入禽肉、蛋类和乳制品</li>
+                            <li>限制红肉和加工食品的摄入</li>
+                            <li>适量饮用红酒（可选）</li>
+                        </ul>
+                        
+                        <h2>科学依据</h2>
+                        <p>多项研究证实了地中海饮食的健康益处：</p>
+                        <p><strong>PREDIMED研究</strong>：这项西班牙的大型研究发现，遵循地中海饮食的人群心血管疾病风险降低30%。</p>
+                        <p><strong>对认知功能的影响</strong>：地中海饮食富含抗氧化剂和抗炎物质，有助于保护大脑健康，降低阿尔茨海默病的风险。</p>
+                        <p><strong>体重管理</strong>：虽然地中海饮食不限制总热量，但由于其高纤维和高饱腹感特性，有助于维持健康体重。</p>
+                        
+                        <h2>实践指南</h2>
+                        <p>将地中海饮食融入日常生活并不困难：</p>
+                        <ol>
+                            <li>每天吃5份以上的蔬菜和水果</li>
+                            <li>用橄榄油代替黄油和其他油脂</li>
+                            <li>选择全谷物面包和 pasta</li>
+                            <li>每周至少吃两次鱼</li>
+                            <li>用香草和香料代替盐来调味</li>
+                            <li>与家人朋友一起用餐，享受食物</li>
+                        </ol>
+                        
+                        <h2>一日饮食示例</h2>
+                        <p><strong>早餐</strong>：希腊酸奶配新鲜水果和坚果</p>
+                        <p><strong>午餐</strong>：地中海沙拉（番茄、黄瓜、橄榄、菲达奶酪）配全麦面包</p>
+                        <p><strong>晚餐</strong>：烤三文鱼配烤蔬菜和藜麦</p>
+                        <p><strong>加餐</strong>：少量坚果或水果</p>
+                        
+                        <blockquote>
+                            健康饮食不是短期节食，而是长期的生活方式选择。地中海饮食的美妙之处在于它不仅健康，而且美味、多样化，容易坚持。
+                        </blockquote>
+                    `
+                }
+            };
+            
+            // 博客文章数据
+            const blogPosts = [
+                {
+                    id: 1,
+                    title: "现代前端开发趋势与技术栈选择",
+                    excerpt: "随着前端技术的快速发展，我们面临着越来越多的框架和工具选择。本文将探讨2023年最值得关注的前端开发趋势，并为您提供技术栈选择的建议。",
+                    date: "2023-10-15",
+                    category: "技术",
+                    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                },
+                {
+                    id: 2,
+                    title: "冰岛极光之旅：追寻自然之光",
+                    excerpt: "冰岛，这个北大西洋上的火山岛国，拥有着令人惊叹的自然景观。在这次旅行中，我不仅看到了壮丽的极光，还体验了冰川徒步和火山探险。",
+                    date: "2023-09-28",
+                    category: "生活",
+                    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                },
+                {
+                    id: 3,
+                    title: "地中海饮食：科学与实践指南",
+                    excerpt: "地中海饮食被公认为最健康的饮食模式之一。本文将介绍其科学依据、核心原则以及如何将其融入日常生活，改善健康状况。",
+                    date: "2023-09-10",
+                    category: "健康",
+                    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                },
+                {
+                    id: 4,
+                    title: "React Hooks深度解析与最佳实践",
+                    excerpt: "React Hooks自推出以来彻底改变了React组件的编写方式。本文深入解析常用Hooks的工作原理，并分享在实际项目中的最佳实践。",
+                    date: "2023-08-22",
+                    category: "技术",
+                    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                },
+                {
+                    id: 5,
+                    title: "如何培养每日阅读习惯",
+                    excerpt: "在信息爆炸的时代，培养阅读习惯比以往任何时候都更加重要。本文分享建立和维持每日阅读习惯的实用策略和技巧。",
+                    date: "2023-08-05",
+                    category: "生活",
+                    image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1153&q=80"
+                },
+                {
+                    id: 6,
+                    title: "可持续生活：从小事做起",
+                    excerpt: "气候变化和环境问题日益严重，可持续生活成为每个人的责任。本文介绍在日常生活中实践可持续性的简单方法。",
+                    date: "2023-07-18",
+                    category: "生活",
+                    image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                }
+            ];
+            
+            // 显示指定页面的函数
+            function showPage(pageId) {
+                // 隐藏所有页面
+                pages.forEach(page => {
+                    page.style.display = 'none';
+                });
+                
+                // 显示目标页面
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.style.display = 'block';
+                    
+                    // 如果是博客列表页，生成文章列表
+                    if (pageId === 'blog-page') {
+                        generateBlogList();
+                    }
+                    
+                    // 滚动到页面顶部
+                    window.scrollTo(0, 0);
+                }
+            }
+            
+            // 生成博客列表
+            function generateBlogList() {
+                const blogGrid = document.querySelector('#blog-page .blog-grid');
+                if (!blogGrid) return;
+                
+                blogGrid.innerHTML = '';
+                
+                blogPosts.forEach(post => {
+                    const articleElement = document.createElement('article');
+                    articleElement.className = 'blog-card';
+                    articleElement.innerHTML = `
+                        <div class="blog-image">
+                            <img src="${post.image}" alt="${post.title}">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span><i class="far fa-calendar"></i> ${post.date}</span>
+                                <span><i class="far fa-folder"></i> ${post.category}</span>
+                            </div>
+                            <h3>${post.title}</h3>
+                            <p>${post.excerpt}</p>
+                            <a href="#" class="read-more" data-page="article" data-article="${post.id}">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    `;
+                    
+                    blogGrid.appendChild(articleElement);
+                });
+                
+                // 为新生成的"阅读全文"链接添加事件监听
+                document.querySelectorAll('#blog-page .read-more').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const pageId = this.getAttribute('data-page') + '-page';
+                        const articleId = this.getAttribute('data-article');
+                        
+                        // 更新导航栏活动状态
+                        navLinks.forEach(nav => nav.classList.remove('active'));
+                        document.querySelector(`.nav-links a[data-page="article"]`).classList.add('active');
+                        
+                        // 显示文章详情页并加载文章
+                        showPage(pageId);
+                        loadArticle(articleId);
+                        
+                        // 移动端菜单收起
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                        }
+                    });
+                });
+            }
+            
+            // 加载文章内容
+            function loadArticle(articleId) {
+                const article = articles[articleId];
+                if (!article) return;
+                
+                // 更新文章标题
+                document.getElementById('article-title').textContent = article.title;
+                
+                // 更新文章元数据
+                const metaElement = document.querySelector('.article-meta');
+                metaElement.innerHTML = `
+                    <span><i class="far fa-user"></i> 作者：李明</span>
+                    <span><i class="far fa-calendar"></i> 发布日期：${article.date}</span>
+                    <span><i class="far fa-folder"></i> 分类：${article.category}</span>
+                    <span><i class="far fa-eye"></i> 阅读：${article.views}</span>
+                `;
+                
+                // 更新文章内容
+                document.getElementById('article-content').innerHTML = article.content;
+            }
+        });
+    </script>
+</body>
+</html>
